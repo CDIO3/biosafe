@@ -6,6 +6,9 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use backend\models\Yritys;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'Rekisteröidy käyttäjäksi';
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,13 +26,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'sukunimi')->textInput()->label('Sukunimi'); ?>
 
-                <?= $form->field($model, 'username')->textInput()->label('Käyttäjänimi'); ?>
-
                 <?= $form->field($model, 'email')->textInput()->label('Sähköposti'); ?>
 
                 <?= $form->field($model, 'puhnro')->textInput()->label('Puhelinnumero'); ?>
 
                 <?= $form->field($model, 'password')->passwordInput()->label('Salasana'); ?>
+
+                <?= $form->field($model, 'yritys_id')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(Yritys::find()->all(),'id','yritysnimi'),
+                    'language' => 'fi',
+                    'options' => ['placeholder' => 'Valitse yritys'],
+                    'pluginOptions' => [
+                        'allowClear' => true //haetaan listana yritykset joista hekilö valitsee omansa
+                    ],
+                    ]);
+                    ?>
 
                 <?= $form->field($model, 'passwordConfirm')->passwordInput()->label('Uudelleen syötä salasana'); ?>
 

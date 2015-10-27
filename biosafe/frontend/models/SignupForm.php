@@ -17,17 +17,16 @@ class SignupForm extends Model
     public $sukunimi;
     public $puhnro;
     public $passwordConfirm;
+    public $yritys_id;
 
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return [
-            ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'required', 'message'=>'Syötä käyttäjänimi.'],
+        return [       
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Käyttäjänimi on jo käytössä!'],
-            ['username', 'string', 'min' => 4, 'max' => 20, 'tooShort' => 'Käyttäjänimen oltava vähintään 4 merkkiä', 'tooLong' => "Käyttäjänimen oltava enintään 20 merkkiä"],
+            ['username', 'string', 'min' => 4, 'max' => 50, 'tooShort' => 'Käyttäjänimen oltava vähintään 4 merkkiä', 'tooLong' => "Käyttäjänimen oltava enintään 20 merkkiä"],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required', 'message'=>'Syötä Sähköpostiosoite.'],
@@ -46,6 +45,7 @@ class SignupForm extends Model
             ['etunimi', 'required', 'message'=>'Syötä etunimi.'],
             ['sukunimi', 'required', 'message'=>'Syötä sukunimi.'],
             ['puhnro', 'required', 'message'=>'Syötä Puhelinnumero.'],
+            ['yritys_id','required','message'=>'Valitse yrityksesi'],
         ];
     }
 
@@ -58,13 +58,14 @@ class SignupForm extends Model
     {
         if ($this->validate()) {
             $user = new User();
-            $user->username = $this->username;
+            $user->username = $this->email;
             $user->email = $this->email;
             $user->etunimi = $this->etunimi;
             $user->sukunimi = $this->sukunimi;
             $user->puhnro = $this->puhnro;
             $user->setPassword($this->password);
             $user->generateAuthKey();
+            $user->yritys_id = $this->yritys_id;
             if ($user->save()) {
                 return $user;
             }

@@ -22,14 +22,14 @@ $this->title = 'Biosafe Tietojärjestelmä';
 
                 <p>Näytteenottosuunnitelma-työkalun avulla luot helposti ajastetut näytteenottoajat käyttäjille</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Avaa luontityökalu &raquo;</a></p>
+                <p><a class="btn btn-default" href="http://localhost:8383/advanced/backend/web/index.php?r=nos%2Findex">Avaa luontityökalu &raquo;</a></p>
             </div>
             <div class="col-lg-4">
-                <h2>Lähetä näytteitä</h2>
+                <h2>Hallitse tuotteita</h2>
 
-                <p>Otetun näytteen tiedot täytetään suunnitelman mukaisesti ja lähetetään tutkittavaksi</p>
+                <p>Selaa ja hallitse tuotteita</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Avaa lähetystyökalu &raquo;</a></p>
+                <p><a class="btn btn-default" href="http://localhost:8383/advanced/backend/web/index.php?r=tuote">Avaa lähetystyökalu &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <h2>Merkitse tutkintatulokset</h2>
