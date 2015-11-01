@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use backend\models\Send;
 
 /**
  * This is the model class for table "nos".
@@ -39,10 +40,11 @@ class Nos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['luontipvm', 'naytteenottopvm','nayte_lahetetty','analyysi_tehty','array','date'], 'safe'],
-            [['tuote_id', 'Raja_arvo1_m', 'Raja_arvo2_M', 'Osanaytteita_n', 'Osanaytteidenmaara_c'], 'required'],
+            [['luontipvm', 'naytteenottopvm','nayte_lahetetty','analyysi_tehty','array'], 'safe'],
+            [[ 'naytteenottopvm','tuote_id', 'Raja_arvo1_m', 'Raja_arvo2_M', 'Osanaytteita_n', 'Osanaytteidenmaara_c'], 'required'],
             [[  'Osanaytteita_n', 'Osanaytteidenmaara_c'], 'integer'],
             [['naytteenottopvm'],'date', 'format' => 'Y-m-d'],
+            //[['luontipvm'],'datetime', 'format' => 'd-m-Y'],
             [['Raja_arvo1_m', 'Raja_arvo2_M'], 'string', 'max' => 32]
         ];
     }
@@ -65,6 +67,7 @@ class Nos extends \yii\db\ActiveRecord
             'Osanaytteidenmaara_c' => 'Osanaytteidenmaara c',
             'analyysi_tehty' => 'Analyysi tehty',
             'nayte_lahetetty' => 'Näyte lähetetty',
+            'array' => 'Valitse analysoitavat bakteerit'
         ];
     }
 

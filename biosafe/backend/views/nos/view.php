@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Nos */
 
-$this->title = $model->id;
+$this->title ='Näytteenottosuunnitelma id: '+ $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Nos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -41,5 +41,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'Osanaytteidenmaara_c',
         ],
     ]) ?>
-
+     <?= Html::submitButton($model->isNewRecord ? 'Luo uusi' : 'Lähetä näyte', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
 </div>

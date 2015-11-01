@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Luo uusi tuote', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?php Pjax::begin(['timeout' => 2000]); //pjax search päälle?>
+    <?php //Pjax::begin(['timeout' => 2000]); //pjax search päälle?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -63,5 +63,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
+    <?php //Pjax::end(); ?>
 </div>

@@ -30,9 +30,10 @@ use kartik\select2\Select2;
             'format' => 'yyyy-mm-dd',
             'todayHighlight' => true,
             'startDate' => 'today',
-            'todayBtn' => true
+            'todayBtn' => true,
             //'calendarWeeks' => true
-            //'multidate' => true
+            'multidate' => true
+
             ]
          
 

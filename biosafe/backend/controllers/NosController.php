@@ -9,7 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\NosBakteerit;
-
+use yii\widgets\Pjax;
+use backend\models\send;
 /**
  * NosController implements the CRUD actions for Nos model.
  */
@@ -49,7 +50,7 @@ class NosController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -66,8 +67,7 @@ class NosController extends Controller
 
         if ($model->load(Yii::$app->request->post())) 
         {
-            $model->luontipvm = date('Y-m-d
-                h:m:s');
+            $model->luontipvm = date('Y-m-d');
           
             $model->henkilo_id = Yii::$app->user->getId();
             $model->save(false);
@@ -84,7 +84,7 @@ class NosController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
 
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }
@@ -103,7 +103,7 @@ class NosController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
+            return $this->renderAjax('update', [
                 'model' => $model,
             ]);
         }
@@ -137,4 +137,32 @@ class NosController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionSend($id)
+    {
+        $model = new Send;
+
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+            $nos1 = Nos::findOne($id);
+            $nos1->nayte_lahetetty = 'Kyllä';
+            $nos1->update();
+            $model->henkilo_id = Yii::$app->user->getId();            
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->nos_id]);
+        }
+        else 
+        {  
+            $snimi =Yii::$app->user->identity->sukunimi;
+            $enimi = Yii::$app->user->identity->etunimi;
+            //$model->henkilo_id = $enimi . ' ' . $snimi;
+            $model->nos_id = $id;            
+            $model->lahetyspvm =  date('Y-m-d');
+            return $this->render('sendView',['model'=>$model]);
+
+          
+        }
+    }
+ 
+
+
 }
