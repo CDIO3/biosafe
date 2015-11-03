@@ -1,11 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+//use yii\grid\GridView;
 use kartik\date\DatePicker;
 use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use kartik\grid\GridView;
+use backend\models\NosSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\NosSearch */
@@ -46,7 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'export' => false,
+
+        'pjax' => true,
         'rowOptions' => function($model) { //tällä värit search kolumneille
+
                     if ($model->nayte_lahetetty == 'Kyllä') 
                     {
                         return ['class'=>'success']; //danger, warning, success
@@ -58,7 +64,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 },
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
+            [
+                'class'=>'kartik\grid\ExpandRowColumn',
+                'value'=> function ($model, $key, $index, $column) {
+                        return GridView::ROW_COLLAPSED;
+                },
+                'detail' => function ($model, $key, $index, $column) {
+                        $searchModel = new NosSearch();
+                        $searchModel->id = $model->id;
+                        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+                        return Yii::$app->controller->renderPartial('_expand', [
+                            'searchModel'=>$searchModel,
+                            'dataProvider'=>$dataProvider,
+                        ]);
+                },
+            ],
 
             //'id',
             'luontipvm',           

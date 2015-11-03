@@ -29,8 +29,9 @@ class Bakteeri extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nimi', 'Tietoja'], 'required'],
+            [['nimi', 'tietoja', 'm_oletusarvo1', 'M_oletusarvo2'], 'required'],
             [['Tietoja'], 'string'],
+            [['m_oletusarvo1', 'M_oletusarvo2'], 'integer'],
             [['nimi'], 'string', 'max' => 32]
         ];
     }
@@ -43,7 +44,9 @@ class Bakteeri extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nimi' => 'Nimi',
-            'Tietoja' => 'Tietoja',
+            'tietoja' => 'Tietoja',
+            'm_oletusarvo1' => 'Oletusarvo m', 
+            'M_oletusarvo2' => 'Oletusarvo M',
         ];
     }
 
@@ -52,6 +55,6 @@ class Bakteeri extends \yii\db\ActiveRecord
      */
     public function getNos()
     {
-        return $this->hasMany(Nos::className(), ['bakteeri_id' => 'id']);
+        return $this->hasMany(nos_analysoitavat::className(), ['bakteeri_id' => 'id']);
     }
 }

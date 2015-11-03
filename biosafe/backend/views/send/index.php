@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\SendSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Lähetys';
+$this->title = 'Sends';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="send-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Luo lähetys', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Send', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

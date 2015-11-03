@@ -11,6 +11,10 @@ use yii\filters\VerbFilter;
 use backend\models\NosBakteerit;
 use yii\widgets\Pjax;
 use backend\models\send;
+use backend\models\Bakteeri;
+use yii\helpers\ArrayHelper;
+use backend\models\DFmodel;
+use backend\models\NosAnalysoitavat;
 /**
  * NosController implements the CRUD actions for Nos model.
  */
@@ -63,29 +67,100 @@ class NosController extends Controller
     public function actionCreate()
     {
         $model = new Nos();
-        
+        $modelsBakteeri = [new NosAnalysoitavat];
 
-        if ($model->load(Yii::$app->request->post())) 
-        {
-            $model->luontipvm = date('Y-m-d');
-          
-            $model->henkilo_id = Yii::$app->user->getId();
-            $model->save(false);
+                       
+                         
 
-            foreach ($model->array as $key => $value)
+
+       
+
+        if ($model->load(Yii::$app->request->post()))//if ($model->load(Yii::$app->request->post()))//if ($model->load(Yii::$app->request->post()) && $model->save(false)) // //
             {
-                $model2 = new NosBakteerit();
-                $model2->nos_id = $model->id;
-                $model2->bakteeri_id = $value;
-                $model2->save();
+
+                        $model->luontipvm = date('Y-m-d');                    
+                        $model->henkilo_id = Yii::$app->user->getId();
+
+                        $model->save(false);
+
+             $modelsBakteeri = DFmodel::createMultiple(NosAnalysoitavat::classname());
+             DFmodel::loadMultiple($modelsBakteeri, Yii::$app->request->post());
+
+            // ajax validation
+            /* if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ArrayHelper::merge(
+                    ActiveForm::validateMultiple($modelsBakteeri),
+                    ActiveForm::validate($modelCustomer)
+                );
+            } */
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = DFmodel::validateMultiple($modelsBakteeri) && $valid;
+           
+           echo '<script>alert("here it stops")</script>';
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                //try {
+                    echo '<script>alert("try")</script>';
+                    //$modeli_id = $model->id;
+
+                    if ($flag = $model->save(false)) {
+                        foreach ($modelsBakteeri as $modelBakteeri) 
+                        {
+                            $modelBakteeri->nos_id = $model->id;
+                            //$modelBakteeri->bakteeri_id = 
+                            //$modelBakteeri->bakteeri_id = ArrayHelper::getValue($model->arraBakteeri);
+                            echo '<script>alert("häähää")</script>';
+                            //$modelBakteeri->nos_id = $model->id;
+                            //$modelBakteeri->save(false);
+                            if (! ($flag = $modelBakteeri->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                            
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();                     
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+               /* } catch (Exception $e) {
+                    $transaction->rollBack();
+                } */
             }
+
+
+
+
+
+             // tässä loppuu
             
 
-            return $this->redirect(['view', 'id' => $model->id]);
+        
+           /* $i = 0;
+            foreach ($model->array as $key => $value)
+            {
 
-        } else {
+                $model2 = new NosAnalysoitavat();
+                $model2->nos_id = $model->id;
+                $model2->bakteeri_id = $arraBakteeri;
+                $model2->osanaytteita_n = $i . $Osanaytteita_n;
+                $model2->osanaytteita_c = $i . $Osanaytteidenmaara_c;
+                $model2->save();
+                $i++;
+            } */
+            
+
+            //return $this->redirect(['view', 'id' => $model->id]);
+
+         } else {
+
+            //echo '<script>alert("asdasd")</script>';
             return $this->renderAjax('create', [
                 'model' => $model,
+                'modelsBakteeri' => (empty($modelsBakteeri)) ? [new NosAnalysoitavat] : $modelsBakteeri
             ]);
         }
     }

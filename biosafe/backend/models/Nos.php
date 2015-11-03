@@ -14,11 +14,6 @@ use backend\models\Send;
  * @property integer $tuote_id
  * @property integer $bakteeri_id
  * @property integer $henkilo_id
- * @property string $Raja-arvo1 (m)
- * @property string $Raja-arvo2 (M)
- * @property integer $Osanaytteita (n)
- * @property integer $Osanaytteidenmaara (c)
- *
  * @property Henkilo $henkilo
  * @property Tuote $tuote
  * @property Bakteeri $bakteeri
@@ -26,6 +21,12 @@ use backend\models\Send;
 class Nos extends \yii\db\ActiveRecord
 {
     public $array;
+    public $Raja_arvo1_m;
+    public $Raja_arvo2_M;
+    public $Osanaytteita_n;
+    public $Osanaytteidenmaara_c;
+    public $arraBakteeri;
+
     /**
      * @inheritdoc
      */
@@ -40,12 +41,12 @@ class Nos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['luontipvm', 'naytteenottopvm','nayte_lahetetty','analyysi_tehty','array'], 'safe'],
-            [[ 'naytteenottopvm','tuote_id', 'Raja_arvo1_m', 'Raja_arvo2_M', 'Osanaytteita_n', 'Osanaytteidenmaara_c'], 'required'],
-            [[  'Osanaytteita_n', 'Osanaytteidenmaara_c'], 'integer'],
+            [['luontipvm', 'naytteenottopvm','nayte_lahetetty','analyysi_tehty','array','arraBakteeri','id','henkilo_id'], 'safe'],
+            [[ 'naytteenottopvm','tuote_id'], 'required'],
+            //[[  'Osanaytteita_n', 'Osanaytteidenmaara_c'], 'integer'],
             [['naytteenottopvm'],'date', 'format' => 'Y-m-d'],
             //[['luontipvm'],'datetime', 'format' => 'd-m-Y'],
-            [['Raja_arvo1_m', 'Raja_arvo2_M'], 'string', 'max' => 32]
+            //[['Raja_arvo1_m', 'Raja_arvo2_M'], 'string', 'max' => 32]
         ];
     }
 
@@ -67,7 +68,8 @@ class Nos extends \yii\db\ActiveRecord
             'Osanaytteidenmaara_c' => 'Osanaytteidenmaara c',
             'analyysi_tehty' => 'Analyysi tehty',
             'nayte_lahetetty' => 'Näyte lähetetty',
-            'array' => 'Valitse analysoitavat bakteerit'
+            'array' => 'Valitse analysoitavat bakteerit',
+            'arraBakteeri' => 'Kohteet',
         ];
     }
 
@@ -97,8 +99,8 @@ class Nos extends \yii\db\ActiveRecord
      /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNos_bakteerit() 
+    public function getNos_analysoitavat() 
     {
-        return $this->hasMany(Nos_bakteerit::className(), ['nos_id' => 'id']);
+        return $this->hasMany(Nos_analysoitavat::className(), ['nos_id' => 'id']);
     }
 }

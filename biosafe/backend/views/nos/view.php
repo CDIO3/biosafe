@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'tuote_id',
             'bakteeri_id',
             'henkilo_id',
-            'nayte_tutkittu',
+            //'nayte_tutkittu',
             'Raja_arvo1_m',
             'Raja_arvo2_M',
             'Osanaytteita_n',

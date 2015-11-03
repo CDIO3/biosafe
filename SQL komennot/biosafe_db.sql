@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 02, 2015 at 09:39 PM
+-- Generation Time: Nov 03, 2015 at 06:11 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -23,52 +23,59 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nos_analysoitavat`
+-- Table structure for table `nos`
 --
 
-CREATE TABLE IF NOT EXISTS `nos_analysoitavat` (
-  `nos_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `nos` (
+  `id` int(11) NOT NULL,
+  `luontipvm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `naytteenottopvm` date NOT NULL,
+  `tuote_id` int(11) NOT NULL,
   `bakteeri_id` int(11) NOT NULL,
-  `osanaytteita_n` int(11) NOT NULL,
-  `osanaytteita_c` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `henkilo_id` int(11) NOT NULL,
+  `nayte_lahetetty` enum('Kyllä','Ei') NOT NULL DEFAULT 'Ei',
+  `analyysi_tehty` enum('Kyllä','Ei') NOT NULL DEFAULT 'Ei'
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `nos_analysoitavat`
+-- Dumping data for table `nos`
 --
 
-INSERT INTO `nos_analysoitavat` (`nos_id`, `bakteeri_id`, `osanaytteita_n`, `osanaytteita_c`) VALUES
-(18, 1, 0, 0),
-(18, 3, 0, 0),
-(18, 5, 0, 0),
-(18, 6, 0, 0);
+INSERT INTO `nos` (`id`, `luontipvm`, `naytteenottopvm`, `tuote_id`, `bakteeri_id`, `henkilo_id`, `nayte_lahetetty`, `analyysi_tehty`) VALUES
+(70, '2015-11-03 00:00:00', '2015-11-03', 3, 0, 3, 'Kyllä', 'Ei');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `nos_analysoitavat`
+-- Indexes for table `nos`
 --
-ALTER TABLE `nos_analysoitavat`
-  ADD UNIQUE KEY `bakteeri_id_3` (`bakteeri_id`),
-  ADD UNIQUE KEY `bakteeri_id_4` (`bakteeri_id`),
-  ADD UNIQUE KEY `bakteeri_id_5` (`bakteeri_id`),
-  ADD UNIQUE KEY `bakteeri_id_6` (`bakteeri_id`),
-  ADD KEY `nos_id` (`nos_id`),
+ALTER TABLE `nos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `henkilo_id` (`henkilo_id`),
   ADD KEY `bakteeri_id` (`bakteeri_id`),
-  ADD KEY `bakteeri_id_2` (`bakteeri_id`);
+  ADD KEY `tuote_id` (`tuote_id`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `nos`
+--
+ALTER TABLE `nos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=71;
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `nos_analysoitavat`
+-- Constraints for table `nos`
 --
-ALTER TABLE `nos_analysoitavat`
-  ADD CONSTRAINT `nos_analysoitavat_ibfk_1` FOREIGN KEY (`nos_id`) REFERENCES `nos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `nos_analysoitavat_ibfk_2` FOREIGN KEY (`bakteeri_id`) REFERENCES `bakteeri` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `nos`
+  ADD CONSTRAINT `nos_ibfk_3` FOREIGN KEY (`henkilo_id`) REFERENCES `henkilo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `nos_ibfk_1` FOREIGN KEY (`tuote_id`) REFERENCES `tuote` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

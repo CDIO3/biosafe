@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Nos;
+use backend\models\NosAnalysoitavat;
 
 /**
  * NosSearch represents the model behind the search form about `backend\models\Nos`.
@@ -18,7 +19,7 @@ class NosSearch extends Nos
     public function rules()
     {
         return [
-            [['id', 'tuote_id', 'bakteeri_id', 'henkilo_id', 'nayte_tutkittu', 'Osanaytteita_n', 'Osanaytteidenmaara_c'], 'integer'],
+            [['id', 'tuote_id', 'bakteeri_id', 'henkilo_id'], 'integer'],
             [['luontipvm', 'naytteenottopvm', 'Raja_arvo1_m', 'Raja_arvo2_M'], 'safe'],
         ];
     }
@@ -62,9 +63,9 @@ class NosSearch extends Nos
             'tuote_id' => $this->tuote_id,
             'bakteeri_id' => $this->bakteeri_id,
             'henkilo_id' => $this->henkilo_id,
-            'nayte_tutkittu' => $this->nayte_tutkittu,
-            'Osanaytteita_n' => $this->Osanaytteita_n,
-            'Osanaytteidenmaara_c' => $this->Osanaytteidenmaara_c,
+            //'nayte_tutkittu' => $this->nayte_tutkittu,
+            //'Osanaytteita_n' => $this->osanaytteita_n,
+            //'Osanaytteidenmaara_c' => $this->osanaytteita_c,
         ]);
 
         $query->andFilterWhere(['like', 'Raja-arvo1_m', $this->Raja_arvo1_m])
