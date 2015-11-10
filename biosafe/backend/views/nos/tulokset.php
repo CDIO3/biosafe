@@ -17,43 +17,17 @@ use backend\models\Nos_analysoitavat;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="nos-form">
+<div class="nos-tulokset">
 
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
      
-      <?= $form->field($model, 'naytteenottopvm')->widget(DatePicker::className(),[
-        'name' => 'deadline',
-        'type' => DatePicker::TYPE_COMPONENT_APPEND,
-        'removeButton' => [ 'title'=>'Tyhjennä'],
-        'pickerButton' => [ 'title'=>'Valitse päivä'],
-        'value' => date('yyyy-mm-dd'),
-        'options' => ['placeholder' => 'Valitse'],
-        'language' => 'fi',
-        'pluginOptions' => [
-            'format' => 'yyyy-mm-dd',
-            'todayHighlight' => true,
-            'startDate' => 'today',
-            'todayBtn' => true,
-            //'calendarWeeks' => true
-            'multidate' => true
+  <?= $form->field($model, 'bakteeri_id')->dropDownList(ArrayHelper::map($array,'id','nimi'),['prompt'=>'Valitse', 'style' => 'display:table-cell;', 
+  'onchange'=> '$.post("index.php?r=nos/kirjaus&id='.'" +$(this).val(), function(data) { $("select#tulokset-bakteeri_id).html(data); });
+  '
 
-            ]
-         
-
-    ]);
-
-     ?>
+   ]); ?>
   
-     
-    <?= $form->field($model, 'tuote_id')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Tuote::find()->all(),'id','nimi'),
-    'language' => 'fi',
-    'options' => ['placeholder' => 'Valitse'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-    ]);
-    ?>
+
 
     
 
@@ -137,3 +111,18 @@ use backend\models\Nos_analysoitavat;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+ 	
+
+
+    
+

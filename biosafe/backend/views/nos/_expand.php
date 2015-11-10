@@ -12,7 +12,7 @@ use kartik\grid\GridView;
 /* @var $searchModel backend\models\NosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Näytteenottosuunnitelma';
+//$this->title = 'Näytteen tulokset';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -20,33 +20,59 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="nos-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<table class="table table-bordered table-condensed table-hover small kv-table">
+                <tbody><tr class="danger">
+                  <?php 
+                $x = 5;
+               
+                $paskaa = $x + 3;
+                $i;
+                
+                for ($s = 0; $s < 4; $s++)
+                {
+                    echo " 
+                    <th colspan='3' class='text-center text-danger'>Bakteerin ".$s." nimi</th>
+                
+                </tr>
+                <tr class='active'>
+                    <th class='text-center'>#</th>
+                    <th>Raja-arvo m</th>
+                    <th class='text-right'>Raja-arvo M</th>
+                </tr>
+                ";
+                for ($i = 0; $i < $x; $i++)
+                {
+                     $luku1 = 12;
+                    echo "
+                    <tr>
+                        <td class='text-center'>".((float)$i + 4)."</td><td>".($luku1 + 4)."</td><td class='text-right'>".((int)$i + 12)."</td>
+                    </tr>
+                    ";
+                        
+                }
+            }
+
+               
+                ?>
+               
+                <tr class="warning">
+                    <th></th><th>Footer</th><th class="text-right">Tähän jotain</th>
+                </tr>
+            </tbody></table>
+    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::button('Luo Näytteenottosuunnitelma', ['value'=>Url::to('index.php?r=nos/create'), 'class' => 'btn btn-success','id'=>'modalNos']) ?>
-    </p>
    
-         <?php 
-        
-
-             Modal::begin([ //luo popup-window modalin
-                'header'=>'<h4 id="modalHeader"></h4>',
-                'id'=>'modal',
-                'size'=>'modal-lg',
-            ]);
-
-        echo "<div id=modalContent></div>";
-
-        Modal::end();
-    
-        
-       
-    ?>
+             
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
+        'hover' => true,
+        //'condensed' => true,
+        'responsive'=>true,
+        //'pagination' => 'false',
+        'summary'=>'', //poistaa 'showing x items..'
         'rowOptions' => function($model) { //tällä värit search kolumneille
                     if ($model->nayte_lahetetty == 'Kyllä') 
                     {
@@ -60,6 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
         'columns' => [
                 ],
+
     ]); ?>
 
 

@@ -42,8 +42,8 @@ class NosAnalysoitavat extends \yii\db\ActiveRecord
         return [
             'nos_id' => 'Näytteenottosuunnitelman ID',
             'bakteeri_id' => 'Bakteeri ID',
-            'osanaytteita_n' => 'osanaytteita_n as',
-            'osanaytteita_c' => 'osanaytteita_c dddd',
+            'osanaytteita_n' => 'Osanaytteita (kpl)',
+            'osanaytteita_c' => 'Virhemarginaali',
             'm_arvo1' => 'm arvo',
             'M_arvo2' => 'M arvo',
         ];
