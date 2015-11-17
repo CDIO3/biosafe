@@ -49,19 +49,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'export' => false,
+        
 
         'pjax' => true,
         'rowOptions' => function($model) { //tällä värit search kolumneille
 
+        
+        
                     if ($model->nayte_lahetetty == 'Kyllä') 
                     {
                         return ['class'=>'success']; //danger, warning, success
                     }
-                    else if ($model->nayte_lahetetty == 'Kyllä' && $model->analyysi_tehty == 'Kyllä')
+                   /* if ($model->nayte_lahetetty == 'Kyllä' && $model->analyysi_tehty == 'Kyllä')
                     {
-                        return ['class'=>'danger'];
+                        return ['class'=>'success'];
+                    }*/
+                    else if ($model->naytteenottopvm >= date('Y-m-d'))
+                    {
+                      return ['class'=>'warning'];                        
                     }
-
+                    else if ($model->nayte_lahetetty == "Ei" && $model->naytteenottopvm < date('Y-m-d'))
+                    {
+                        return ['class'=>'danger'];                        
+                    }
+                    
+                        
+                   
                 },
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
