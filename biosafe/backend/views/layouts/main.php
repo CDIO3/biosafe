@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -28,20 +28,20 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Etusivu',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Etusivu', 'url' => ['/site/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Kirjaudu sisään', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
-            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+            'label' => 'Kirjaudu ulos (' . Yii::$app->user->identity->username . ')',
             'url' => ['/site/logout'],
             'linkOptions' => ['data-method' => 'post']
         ];
