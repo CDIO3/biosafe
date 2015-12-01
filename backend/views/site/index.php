@@ -22,14 +22,14 @@ $this->title = 'My Yii Application';
 
                 <p>Työkalun avulla luot näytteenottosuunnitelman</p>
 
-                <p><a class="btn btn-default" href="http://localhost:8383/advanced/backend/web/index.php?r=nos%2Fcreate">Luo näytteenottosuunnitelma &raquo;</a></p>
+                <p><a class="btn btn-default" href="http://localhost/biosafe/backend/web/index.php?r=nos%2Fcreate">Luo näytteenottosuunnitelma &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <h2>Ota ja näyte ja lähetä labraan</h2>
 
                 <p>asdddd</p>
 
-                <p><a class="btn btn-default" href="http://localhost:8383/advanced/backend/web/index.php?r=nos%2Findex">Selaa ja lähetä &raquo;</a></p>
+                <p><a class="btn btn-default" href="http://localhost/biosafe/backend/web/index.php?r=nos%2Findex">Selaa ja lähetä &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <h2>Merkitse analysointitulokset</h2>

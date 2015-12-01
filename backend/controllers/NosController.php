@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
 use backend\models\DFmodel;
 use backend\models\NosAnalysoitavat;
 use backend\models\Tulokset;
+use backend\models\Info;
 use yii\web\Response;
 /**
  * NosController implements the CRUD actions for Nos model.
@@ -216,6 +217,27 @@ class NosController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function actionInfo($id)
+    {
+        $model = new Info();
+
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+           
+            return $this->redirect(['view', 'id' => $model->nos_id]);
+        }
+        else 
+        {  
+            $snimi =Yii::$app->user->identity->sukunimi;
+            $enimi = Yii::$app->user->identity->etunimi;
+            $model->nos_id = $id;   
+            $model->bakteeri_id;
+            return $this->render('info',['model'=>$model]);
+
+          
+        }
+    }
     public function actionSend($id)
     {
         $model = new Send();
@@ -352,7 +374,7 @@ class NosController extends Controller
         }
 
     }
-
+    }
     public function actionKirjaus($id)
     {
         

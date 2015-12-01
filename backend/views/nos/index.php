@@ -147,6 +147,22 @@ $this->params['breadcrumbs'][] = $this->title;
                //'context' => $this->context,
                 'template' => '{send} {delete}',                          
             ],
+                        $actionCol = ['class' => 'yii\grid\ActionColumn',
+                        'template' => '{info}',
+                        'buttons' => [
+                            'info' => function ($url, $model) {
+                                return Html::a('<span class="glyphicon glyphicon-info-sign"></span>', $url, [
+                                            'title' => Yii::t('app', 'Info'),
+                                ]);
+                            }
+                        ],
+//                        'urlCreator' => function ($action, $model, $key, $index) {
+//                            if ($action === 'info') {
+//                                $url = Yii::$app->controller->createUrl('xx'); // your own url generation logic
+//                                return $url;
+//                            }
+//                        }
+                  ],
                 
             
 
