@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 28, 2015 at 08:54 AM
+-- Generation Time: Nov 04, 2015 at 09:11 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -23,46 +23,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `asiakas`
---
-
-CREATE TABLE IF NOT EXISTS `asiakas` (
-  `id` int(11) NOT NULL,
-  `nimi` varchar(32) NOT NULL,
-  `yritys_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `asiakas`
---
-
-INSERT INTO `asiakas` (`id`, `nimi`, `yritys_id`) VALUES
-(1, 'Prisma Kuopio', 1),
-(2, 'Citymarket', 2);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `bakteeri`
 --
 
 CREATE TABLE IF NOT EXISTS `bakteeri` (
   `id` int(11) NOT NULL,
   `nimi` varchar(32) NOT NULL,
-  `Tietoja` text NOT NULL
+  `tietoja` text NOT NULL,
+  `m_oletusarvo1` varchar(32) NOT NULL DEFAULT '2.233231',
+  `M_oletusarvo2` varchar(32) NOT NULL DEFAULT '123.431'
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `bakteeri`
 --
 
-INSERT INTO `bakteeri` (`id`, `nimi`, `Tietoja`) VALUES
-(1, 'Aerobiset mikrobit', ''),
-(2, 'Enterobakteerit', ''),
-(3, 'Homeet', ''),
-(4, 'Hiiva', ''),
-(5, 'Bacillus cereus', ''),
-(6, 'Clostridium perfringens', 'Suojakaasu- ja hapettomat pakkaukset');
+INSERT INTO `bakteeri` (`id`, `nimi`, `tietoja`, `m_oletusarvo1`, `M_oletusarvo2`) VALUES
+(1, 'Aerobiset mikrobit', '', '2.233231', '123.431'),
+(2, 'Enterobakteerit', '', '2.233231', '123.431'),
+(3, 'Homeet', '', '2.233231', '123.431'),
+(4, 'Hiiva', '', '2.233231', '123.431'),
+(5, 'Bacillus cereus', '', '2.233231', '123.431'),
+(6, 'Clostridium perfringens', 'Suojakaasu- ja hapettomat pakkaukset', '2.233231', '123.431');
 
 -- --------------------------------------------------------
 
@@ -109,7 +91,16 @@ CREATE TABLE IF NOT EXISTS `laboratoriot` (
   `postitoimipaikka` varchar(32) NOT NULL,
   `puhnro` varchar(32) NOT NULL,
   `sposti` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `laboratoriot`
+--
+
+INSERT INTO `laboratoriot` (`id`, `laboratio_nimi`, `osoite`, `postinro`, `postitoimipaikka`, `puhnro`, `sposti`) VALUES
+(1, 'Laboratorio1', 'Testkiatu 22', 1000, 'Kylä', '3004033', 'laboratorio@labra@gmail.com'),
+(2, 'Laboratorio2', 'Testkiatu 32', 2000, 'Kylä 2', '2334', 'laboratorio2@labra@gmail.com'),
+(3, 'laboratorio3', 'Testkiatu 42', 233213, 'Kylä 3', '1233123', 'laboratorio3@labra@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -133,20 +124,6 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `naytteenotto`
---
-
-CREATE TABLE IF NOT EXISTS `naytteenotto` (
-  `id` int(11) NOT NULL,
-  `nos_id` int(11) NOT NULL,
-  `tekija_id` int(11) NOT NULL,
-  `laboratio_id` int(11) NOT NULL,
-  `lahetetty_labraan` set('Kyllä','Ei') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `nos`
 --
 
@@ -157,40 +134,84 @@ CREATE TABLE IF NOT EXISTS `nos` (
   `tuote_id` int(11) NOT NULL,
   `bakteeri_id` int(11) NOT NULL,
   `henkilo_id` int(11) NOT NULL,
-  `nayte_tutkittu` enum('Ei','Kyllä') NOT NULL DEFAULT 'Ei',
-  `Raja_arvo1_m` varchar(32) NOT NULL,
-  `Raja_arvo2_M` varchar(32) NOT NULL,
-  `Osanaytteita_n` int(10) NOT NULL,
-  `Osanaytteidenmaara_c` int(10) NOT NULL,
   `nayte_lahetetty` enum('Kyllä','Ei') NOT NULL DEFAULT 'Ei',
   `analyysi_tehty` enum('Kyllä','Ei') NOT NULL DEFAULT 'Ei'
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `nos`
 --
 
-INSERT INTO `nos` (`id`, `luontipvm`, `naytteenottopvm`, `tuote_id`, `bakteeri_id`, `henkilo_id`, `nayte_tutkittu`, `Raja_arvo1_m`, `Raja_arvo2_M`, `Osanaytteita_n`, `Osanaytteidenmaara_c`, `nayte_lahetetty`, `analyysi_tehty`) VALUES
-(11, '2015-10-28 08:10:10', '2015-10-31', 5, 0, 3, 'Ei', '1,423+e04', '2,032+e10', 7, 2, 'Ei', 'Ei'),
-(12, '2015-10-28 08:10:17', '2015-10-31', 5, 0, 3, 'Ei', '1,423+e04', '2,032+e10', 7, 2, 'Ei', 'Ei');
+INSERT INTO `nos` (`id`, `luontipvm`, `naytteenottopvm`, `tuote_id`, `bakteeri_id`, `henkilo_id`, `nayte_lahetetty`, `analyysi_tehty`) VALUES
+(70, '2015-11-03 00:00:00', '2015-11-03', 3, 0, 3, 'Kyllä', 'Ei'),
+(71, '2015-11-04 00:00:00', '2015-11-15', 5, 0, 3, 'Kyllä', 'Ei'),
+(72, '2015-11-04 00:00:00', '2016-01-20', 3, 0, 3, 'Kyllä', 'Ei');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nos_bakteerit`
+-- Table structure for table `nos_analysoitavat`
 --
 
-CREATE TABLE IF NOT EXISTS `nos_bakteerit` (
+CREATE TABLE IF NOT EXISTS `nos_analysoitavat` (
+  `nos_id` int(11) NOT NULL,
+  `bakteeri_id` int(11) NOT NULL,
+  `osanaytteita_n` int(11) NOT NULL,
+  `osanaytteita_c` int(11) NOT NULL,
+  `m_arvo1` int(11) NOT NULL,
+  `M_arvo2` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `nos_analysoitavat`
+--
+
+INSERT INTO `nos_analysoitavat` (`nos_id`, `bakteeri_id`, `osanaytteita_n`, `osanaytteita_c`, `m_arvo1`, `M_arvo2`) VALUES
+(70, 1, 3, 4, 1, 2),
+(70, 1, 3, 4, 2, 1),
+(70, 3, 5, 9, 4, 7),
+(71, 4, 3, 4, 1, 2),
+(71, 3, 6, 7, 5, 4),
+(71, 2, 6, 7, 3, 4),
+(72, 1, 3, 4, 1, 2),
+(72, 4, 4, 5, 3, 2),
+(72, 2, 2, 3, 7, 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nos_tulokset`
+--
+
+CREATE TABLE IF NOT EXISTS `nos_tulokset` (
+  `m_tulos1` varchar(32) NOT NULL,
+  `M_tulos2` varchar(32) NOT NULL,
   `nos_id` int(11) NOT NULL,
   `bakteeri_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `nos_bakteerit`
+-- Table structure for table `send`
 --
 
-INSERT INTO `nos_bakteerit` (`nos_id`, `bakteeri_id`) VALUES
-(12, 2);
+CREATE TABLE IF NOT EXISTS `send` (
+  `nos_id` int(11) NOT NULL,
+  `henkilo_id` int(11) NOT NULL,
+  `labra_id` int(11) NOT NULL,
+  `lisatietoja` text NOT NULL,
+  `lahetyspvm` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `send`
+--
+
+INSERT INTO `send` (`nos_id`, `henkilo_id`, `labra_id`, `lisatietoja`, `lahetyspvm`) VALUES
+(70, 3, 2, 'paksa', '2015-11-03'),
+(71, 3, 2, 'Valmis tutkittavaksi', '2015-11-04'),
+(72, 3, 1, 'testi', '2015-11-04');
 
 -- --------------------------------------------------------
 
@@ -206,19 +227,18 @@ CREATE TABLE IF NOT EXISTS `tuote` (
   `sisaltaako_porkkanaa` enum('Kyllä','Ei') NOT NULL,
   `sisaltaako_perunaa` enum('Kyllä','Ei') NOT NULL,
   `Tuoteryhma` enum('Valmisruoka','Lihavalmiste','Raakalihavalmiste','Muu') NOT NULL,
-  `yritys_id` int(11) NOT NULL,
-  `asiakas_id` int(11) NOT NULL
+  `yritys_id` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tuote`
 --
 
-INSERT INTO `tuote` (`id`, `nimi`, `ean`, `Ravintokoostumus`, `sisaltaako_porkkanaa`, `sisaltaako_perunaa`, `Tuoteryhma`, `yritys_id`, `asiakas_id`) VALUES
-(2, 'RB porkkanalaatikko', 1231231, '100% parasta porkkanaa', 'Kyllä', 'Ei', 'Valmisruoka', 1, 1),
-(3, 'RB maksalaatikko', 120310314, 'Maksaa ja laatikko', 'Ei', 'Kyllä', 'Valmisruoka', 1, 1),
-(5, 'Pirkka makkara', 123213123, '5% liha\r\n90% jauho', 'Ei', 'Ei', 'Lihavalmiste', 2, 2),
-(6, 'Siskonmakkarapaketti', 123123123, 'TESTI', 'Kyllä', 'Kyllä', 'Raakalihavalmiste', 2, 2);
+INSERT INTO `tuote` (`id`, `nimi`, `ean`, `Ravintokoostumus`, `sisaltaako_porkkanaa`, `sisaltaako_perunaa`, `Tuoteryhma`, `yritys_id`) VALUES
+(2, 'RB porkkanalaatikko', 1231231, '100% parasta porkkanaa', 'Kyllä', 'Ei', 'Valmisruoka', 1),
+(3, 'RB maksalaatikko', 120310314, 'Maksaa ja laatikko', 'Ei', 'Kyllä', 'Valmisruoka', 1),
+(5, 'Pirkka makkara', 123213123, '5% liha\r\n90% jauho', 'Ei', 'Ei', 'Lihavalmiste', 2),
+(6, 'Siskonmakkarapaketti', 123123123, 'TESTI', 'Kyllä', 'Kyllä', 'Raakalihavalmiste', 2);
 
 -- --------------------------------------------------------
 
@@ -243,14 +263,6 @@ INSERT INTO `yritys` (`id`, `yritysnimi`, `tuotantopaikka`) VALUES
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `asiakas`
---
-ALTER TABLE `asiakas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `yritys_id` (`yritys_id`),
-  ADD KEY `yritys_id_2` (`yritys_id`);
 
 --
 -- Indexes for table `bakteeri`
@@ -280,12 +292,6 @@ ALTER TABLE `migration`
   ADD PRIMARY KEY (`version`);
 
 --
--- Indexes for table `naytteenotto`
---
-ALTER TABLE `naytteenotto`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `nos`
 --
 ALTER TABLE `nos`
@@ -295,21 +301,35 @@ ALTER TABLE `nos`
   ADD KEY `tuote_id` (`tuote_id`);
 
 --
--- Indexes for table `nos_bakteerit`
+-- Indexes for table `nos_analysoitavat`
 --
-ALTER TABLE `nos_bakteerit`
-  ADD PRIMARY KEY (`nos_id`),
+ALTER TABLE `nos_analysoitavat`
   ADD KEY `nos_id` (`nos_id`),
-  ADD KEY `bakteeri_id` (`bakteeri_id`),
-  ADD KEY `bakteeri_id_2` (`bakteeri_id`);
+  ADD KEY `bakteeri_id` (`bakteeri_id`);
+
+--
+-- Indexes for table `nos_tulokset`
+--
+ALTER TABLE `nos_tulokset`
+  ADD PRIMARY KEY (`nos_id`),
+  ADD UNIQUE KEY `bakteeri_id` (`bakteeri_id`),
+  ADD KEY `nos_id` (`nos_id`,`bakteeri_id`);
+
+--
+-- Indexes for table `send`
+--
+ALTER TABLE `send`
+  ADD PRIMARY KEY (`nos_id`),
+  ADD KEY `nos_id` (`nos_id`,`henkilo_id`,`labra_id`),
+  ADD KEY `henkilo_id` (`henkilo_id`),
+  ADD KEY `labra_id` (`labra_id`);
 
 --
 -- Indexes for table `tuote`
 --
 ALTER TABLE `tuote`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `yritys_id` (`yritys_id`),
-  ADD KEY `asiakas_id` (`asiakas_id`);
+  ADD KEY `yritys_id` (`yritys_id`);
 
 --
 -- Indexes for table `yritys`
@@ -321,11 +341,6 @@ ALTER TABLE `yritys`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `asiakas`
---
-ALTER TABLE `asiakas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `bakteeri`
 --
@@ -340,17 +355,12 @@ ALTER TABLE `henkilo`
 -- AUTO_INCREMENT for table `laboratoriot`
 --
 ALTER TABLE `laboratoriot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `naytteenotto`
---
-ALTER TABLE `naytteenotto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `nos`
 --
 ALTER TABLE `nos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT for table `tuote`
 --
@@ -366,31 +376,39 @@ ALTER TABLE `yritys`
 --
 
 --
--- Constraints for table `asiakas`
---
-ALTER TABLE `asiakas`
-  ADD CONSTRAINT `asiakas_ibfk_1` FOREIGN KEY (`yritys_id`) REFERENCES `yritys` (`id`);
-
---
 -- Constraints for table `nos`
 --
 ALTER TABLE `nos`
-  ADD CONSTRAINT `nos_ibfk_1` FOREIGN KEY (`tuote_id`) REFERENCES `tuote` (`id`),
-  ADD CONSTRAINT `nos_ibfk_3` FOREIGN KEY (`henkilo_id`) REFERENCES `henkilo` (`id`);
+  ADD CONSTRAINT `nos_ibfk_1` FOREIGN KEY (`tuote_id`) REFERENCES `tuote` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `nos_ibfk_3` FOREIGN KEY (`henkilo_id`) REFERENCES `henkilo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `nos_bakteerit`
+-- Constraints for table `nos_analysoitavat`
 --
-ALTER TABLE `nos_bakteerit`
-  ADD CONSTRAINT `nos_bakteerit_ibfk_1` FOREIGN KEY (`nos_id`) REFERENCES `nos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `nos_bakteerit_ibfk_2` FOREIGN KEY (`bakteeri_id`) REFERENCES `bakteeri` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `nos_analysoitavat`
+  ADD CONSTRAINT `nos_analysoitavat_ibfk_1` FOREIGN KEY (`nos_id`) REFERENCES `nos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `nos_analysoitavat_ibfk_2` FOREIGN KEY (`bakteeri_id`) REFERENCES `bakteeri` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `nos_tulokset`
+--
+ALTER TABLE `nos_tulokset`
+  ADD CONSTRAINT `nos_tulokset_ibfk_1` FOREIGN KEY (`nos_id`) REFERENCES `send` (`nos_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `nos_tulokset_ibfk_2` FOREIGN KEY (`bakteeri_id`) REFERENCES `nos_analysoitavat` (`bakteeri_id`);
+
+--
+-- Constraints for table `send`
+--
+ALTER TABLE `send`
+  ADD CONSTRAINT `send_ibfk_1` FOREIGN KEY (`nos_id`) REFERENCES `nos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `send_ibfk_2` FOREIGN KEY (`henkilo_id`) REFERENCES `henkilo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `send_ibfk_3` FOREIGN KEY (`labra_id`) REFERENCES `laboratoriot` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `tuote`
 --
 ALTER TABLE `tuote`
-  ADD CONSTRAINT `tuote_ibfk_1` FOREIGN KEY (`yritys_id`) REFERENCES `yritys` (`id`),
-  ADD CONSTRAINT `tuote_ibfk_2` FOREIGN KEY (`asiakas_id`) REFERENCES `asiakas` (`id`);
+  ADD CONSTRAINT `tuote_ibfk_1` FOREIGN KEY (`yritys_id`) REFERENCES `yritys` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
