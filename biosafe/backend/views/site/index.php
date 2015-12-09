@@ -7,11 +7,11 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1>Tervetuloa!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">Olet Biosafen näytteenottojärjestelmän etusivulla.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p><a href="http://www.biosafe.fi/"><img src="\advanced\backend\logo.png" alt="Biosafe"></a></p>
     </div>
 
     <div class="body-content">
@@ -20,23 +20,24 @@ $this->title = 'My Yii Application';
             <div class="col-lg-4">
                 <h2>Luo näytteenottosuunnitelma</h2>
 
-                <p>Työkalun avulla luot näytteenottosuunnitelman</p>
+                <p><br></p>
 
                 <p><a class="btn btn-default" href="http://localhost:8383/advanced/backend/web/index.php?r=nos%2Fcreate">Luo näytteenottosuunnitelma &raquo;</a></p>
             </div>
             <div class="col-lg-4">
-                <h2>Ota ja näyte ja lähetä labraan</h2>
+                <h2>Tarkastele näytteitä ja käsittele niitä</h2>
+				<p><br></p>
 
-                <p>asdddd</p>
+                
 
-                <p><a class="btn btn-default" href="http://localhost:8383/advanced/backend/web/index.php?r=nos%2Findex">Selaa ja lähetä &raquo;</a></p>
+                <p><a class="btn btn-default" href="http://localhost:8383/advanced/backend/web/index.php?r=nos%2Findex">Selaa ja käsittele &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <h2>Merkitse analysointitulokset</h2>
 
-                <p>Lasdasdad.</p>
+                <p><br></p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Merkitse tulokset &raquo;</a></p>
             </div>
         </div>
 

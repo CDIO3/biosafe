@@ -1,7 +1,6 @@
 	 $(function openModal(){ //popup-window scripti
 
-	$('.modalPopUp').click(function(e){
-	e.preventDefault(); //column action napit joilla class=modalPopUp
+	$('.modalPopUp').click(function(){ //column action napit joilla class=modalPopUp
 		//var elementId = $(this).closest('tr').data('key');
 		$('#modal').modal('show')
 			.find('#modalContent')
@@ -19,11 +18,6 @@
 		    //document.getElementById('modalHeader').innerHTML = '<h4>Luo näytteenottosuunnitelma</h4>';
 		});
 	});
-
-	 $('#bakteeriList').click(function(e) { 
-	e.preventDefault();
-	e.stopPropagation();
-});
 
 	
 
