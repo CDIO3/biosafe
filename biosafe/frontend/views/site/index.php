@@ -11,7 +11,7 @@ $this->title = 'Biosafe Tietojärjestelmä';
 
         <p class="lead">Luo, hallitse ja lähetä näyttöönottosuunnitelmia</p>
 
-        <p><a href="http://www.biosafe.fi/"><img src="\advanced\backend\logo.png" alt="Biosafe"></a></p>
+        <p><a class="btn btn-lg btn-success" href="http://www.biosafe.fi">Biosafe</a></p>
     </div>
 
     <div class="body-content">
@@ -27,14 +27,14 @@ $this->title = 'Biosafe Tietojärjestelmä';
             <div class="col-lg-4">
                 <h2>Hallitse tuotteita</h2>
 
-                <p>Selaa ja hallitse tuotteita<br><br></p>
+                <p>Selaa ja hallitse tuotteita</p>
 
                 <p><a class="btn btn-default" href="http://localhost:8383/advanced/backend/web/index.php?r=tuote">Avaa lähetystyökalu &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <h2>Merkitse tutkintatulokset</h2>
 
-                <p>Päivitä tutkittujen näytteiden tulokset järjestelmään<br><br></p>
+                <p>Päivitä tutkittujen näytteiden tulokset järjestelmään</p>
 
                 <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Avaa päivitystyökalu &raquo;</a></p>
             </div>

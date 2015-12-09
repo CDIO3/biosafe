@@ -137,3 +137,26 @@ use backend\models\Nos_analysoitavat;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php 
+$script = <<< JS
+
+$('form#dynamic-form').on('beforeSubmit', function(e)
+{
+    var \$form = $(this);
+    $.post(
+        \$form.attr("action"), 
+        \$form.serialize()
+        )
+       
+                $(\$form).trigger("reset");
+                //$(document).find('#secondmodal').modal('hide');
+                $.pjax.reload({container:'#nosGrid'});
+                alert("Suunnitelma luotu!");
+         
+    return false;
+    
+});
+JS;
+$this->registerJs($script);
+?>

@@ -12,7 +12,7 @@ use backend\models\Laboratoriot;
 ?>
 <div class="sendView">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'sendForm']); ?>
 
         <?= $form->field($model, 'nos_id')->textInput(['readonly' => true]) ?>
         <?= $form->field($model, 'henkilo_id')->textInput(['readonly' => true, 'value' => '1']) ?>
@@ -43,3 +43,26 @@ use backend\models\Laboratoriot;
     <?php ActiveForm::end(); ?>
 
 </div><!-- sendView -->
+
+<?php 
+$script = <<< JS
+
+$('form#sendForm').on('beforeSubmit', function(e)
+{
+    var \$form = $(this);
+    $.post(
+        \$form.attr("action"), 
+        \$form.serialize()
+        )
+       
+                //$(\$form).trigger("reset");
+                $(document).find('#modal').modal('hide');
+                $.pjax.reload({container:'#nosGrid'});
+                alert("Suunnitelma lähetetty!");
+         
+    return false;
+    
+});
+JS;
+$this->registerJs($script);
+?>
