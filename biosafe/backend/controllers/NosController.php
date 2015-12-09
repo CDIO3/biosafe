@@ -17,6 +17,10 @@ use backend\models\DFmodel;
 use backend\models\NosAnalysoitavat;
 use backend\models\Tulokset;
 use yii\web\Response;
+use yii\db\ActiveQuery;
+use app\components\PhpArrayFormatter;
+use yii\helpers\Json;
+
 /**
  * NosController implements the CRUD actions for Nos model.
  */
@@ -73,11 +77,7 @@ class NosController extends Controller
         $model = new Nos();
         $modelsBakteeri = [new NosAnalysoitavat];
 
-                       
-                         
-
-
-       
+                                              
 
         if ($model->load(Yii::$app->request->post()))//if ($model->load(Yii::$app->request->post()))//if ($model->load(Yii::$app->request->post()) && $model->save(false)) // //
             {
@@ -103,11 +103,11 @@ class NosController extends Controller
             $valid = $model->validate();
             $valid = DFmodel::validateMultiple($modelsBakteeri) && $valid;
            
-           echo '<script>alert("here it stops")</script>';
+           //echo '<script>alert("Suunnitelma luotu")</script>';
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
                 //try {
-                    echo '<script>alert("try")</script>';
+                    //echo '<script>alert("try")</script>';
                     //$modeli_id = $model->id;
 
                     if ($flag = $model->save(false)) {
@@ -116,7 +116,7 @@ class NosController extends Controller
                             $modelBakteeri->nos_id = $model->id;
                             //$modelBakteeri->bakteeri_id = 
                             //$modelBakteeri->bakteeri_id = ArrayHelper::getValue($model->arraBakteeri);
-                            echo '<script>alert("häähää")</script>';
+                            //echo '<script>alert("häähää")</script>';
                             //$modelBakteeri->nos_id = $model->id;
                             //$modelBakteeri->save(false);
                             if (! ($flag = $modelBakteeri->save(false))) {
@@ -127,8 +127,9 @@ class NosController extends Controller
                         }
                     }
                     if ($flag) {
-                        $transaction->commit();                     
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        $transaction->commit();
+                                           
+                        //return $this->redirect(['view', 'id' => $model->id]);
                     }
                /* } catch (Exception $e) {
                     $transaction->rollBack();
@@ -213,7 +214,7 @@ class NosController extends Controller
         if (($model = Nos::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Sivua ei löytynyt');
         }
     }
     public function actionSend($id)
@@ -227,16 +228,16 @@ class NosController extends Controller
             $nos1->update();
             $model->henkilo_id = Yii::$app->user->getId();            
             $model->save();
-            return $this->redirect(['view', 'id' => $model->nos_id]);
+            //return $this->redirect(['view', 'id' => $model->nos_id]);
         }
         else 
         {  
-            $snimi =Yii::$app->user->identity->sukunimi;
-            $enimi = Yii::$app->user->identity->etunimi;
+            //$snimi =Yii::$app->user->identity->sukunimi;
+            //$enimi = Yii::$app->user->identity->etunimi;
             //$model->henkilo_id = $enimi . ' ' . $snimi;
             $model->nos_id = $id;            
             $model->lahetyspvm =  date('Y-m-d');
-            return $this->render('sendView',['model'=>$model]);
+            return $this->renderAjax('sendView',['model'=>$model]);
 
           
         }
@@ -245,10 +246,18 @@ class NosController extends Controller
     {
         //as
         $model = new Tulokset();
-        $modelsBakteeri = [new Tulokset];
+        
         $model2 = new NosAnalysoitavat();
         $bakteeri = new Bakteeri();
         $array = [];
+
+        $modelsBakteeri = [new Tulokset];
+       
+        
+        
+        //$bktr = unserialize($bktr);
+        
+        
         
         /* if( $_POST ) {
             die( print_r($_POST) );
@@ -256,78 +265,73 @@ class NosController extends Controller
             // die( var_dump($_POST) );
         } */
                
-
-
-    
-
-       $modelsBakteeri = [new Tulokset];
-
-                       
-                         
-
-
        
 
         if ($model->load(Yii::$app->request->post()))//if ($model->load(Yii::$app->request->post()))//if ($model->load(Yii::$app->request->post()) && $model->save(false)) // //
             {
+                        $tulokset = $_POST["Tulokset"];
+                        $arvot = $tulokset['0'];
+                        $i = 0;
+                        $b_id = $tulokset['bakteeri_id'];
+                        $n_id = $id;//$tulokset['nos_id'];
 
-                        $model->luontipvm = date('Y-m-d');                    
-                        $model->henkilo_id = Yii::$app->user->getId();
+                        //echo '<script>alert($tulokset.length)</script>';
+                         //$model->bakteeri_id = $tulokset['bakteeri_id'];
+                         //$model->nos_id = $tulokset['nos_id'];
 
-                        $model->save(false);
+                        //$model->luontipvm = date('Y-m-d');
+                                     
+                        //$model->henkilo_id = Yii::$app->user->getId();
 
-             $modelsBakteeri = DFmodel::createMultiple(Tulokset::classname());
-             DFmodel::loadMultiple($modelsBakteeri, Yii::$app->request->post());
+                        //$model->save(false);  $tulokset['lkm']
 
-            // ajax validation
-            /* if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ArrayHelper::merge(
-                    ActiveForm::validateMultiple($modelsBakteeri),
-                    ActiveForm::validate($modelCustomer)
-                );
-            } */
+                       /*   for ($i = 0; $i < $tulokset['lkm']; $i++)
+                            {
+                                    
+                                $model->m_tulos1 = $tulokset[$i]['m_tulos1'];
+                                $model->M_tulos2 = $tulokset[$i]['M_tulos2'];
+                                $model->insert(false);
+                            } */
 
-            // validate all models
-            $valid = $model->validate();
-            $valid = DFmodel::validateMultiple($modelsBakteeri) && $valid;
-           
-           echo '<script>alert("here it stops")</script>';
-            if ($valid) {
-                $transaction = \Yii::$app->db->beginTransaction();
-                //try {
-                    echo '<script>alert("try")</script>';
-                    //$modeli_id = $model->id;
+                            //foreach ($modelsBakteeri as $i => $modelsBakteeri) {}
+                            do {
+                                $tulos = new Tulokset();
+                                $tulos->m_tulos1 = $tulokset[$i]['m_tulos1'];
+                                $tulos->M_tulos2 = $tulokset[$i]['M_tulos2'];
+                                $tulos->bakteeri_id = $b_id;
+                                $tulos->nos_id = $n_id;
+                               /*echo '<script>console.log($model->bakteeri_id = $b_id;
+                                        $model->nos_id = $n_id;)</script>';
+                                print_r($tulokset); */
+                               
 
-                    if ($flag = $model->save(false)) {
-                        foreach ($modelsBakteeri as $modelBakteeri) 
-                        {
-                            $modelBakteeri->nos_id = $model->id;
-                            //$modelBakteeri->bakteeri_id = 
-                            //$modelBakteeri->bakteeri_id = ArrayHelper::getValue($model->arraBakteeri);
-                            echo '<script>alert("häähää")</script>';
-                            //$modelBakteeri->nos_id = $model->id;
-                            //$modelBakteeri->save(false);
-                            if (! ($flag = $modelBakteeri->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
+                              /*  if ($model->nos_id == 0 || $model->bakteeri_id == 0)
+                                {
+                                       $model->bakteeri_id = $b_id;
+                                        $model->nos_id = $n_id;
+                                } */
+
+                                $tulos->save(false);
+                                $i++;
+
+                            } while ($i < (count($tulokset) - 1));
+
+                            $target = NosAnalysoitavat::find()->where(['nos_id'=>$id, 'bakteeri_id' =>$b_id])->all();
+                            $target[0]['otetut_naytteet_lkm'] = (count($tulokset) - 1);
+                            //$target[0]->update(false); vaatii primary keyn
                             
-                        }
-                    }
-                    if ($flag) {
-                        $transaction->commit();                     
-                        return $this->redirect(['view', 'id' => $model->id]);
-                    }
-               /* } catch (Exception $e) {
-                    $transaction->rollBack();
-                } */
-            }
+
+
+
+
+        }
         else 
         {
+            $model->lkm = 0;
             //$lkm = NosAnalysoitavat::find()->where(['nos_id' => $id, ])
             $model->nos_id = $id;
              $count = NosAnalysoitavat::find()->where(['nos_id' => $id])->all();
+             //$model->bakteeri_id = $tulokset_bakteeri_id;
 
              //$array = Bakteeri::find()->asArray()->where(['id' => $count->bakteeri_id])->all();
 
@@ -340,11 +344,38 @@ class NosController extends Controller
             /* if ($model->bakteeri_id == 1) {$model->m_tulos1 = "ASD";}
             else {$model->m_tulos1 = "HAA";} */
 
-             return $this->render('tulokset',[
+            /*if ($tulokset_bakteeri_id == null)
+            {
+                $tulokset_bakteeri_id = "Valitse bakteeri";
+            }*/
+
+            /*if (isset($_GET["Tulokset"]))
+            {
+                $tulokset = $_GET["Tulokset"];
+                $tulokset_bakteeri_id = $tulokset['bakteeri_id'];
+            }
+            else
+            {
+                $tulokset_bakteeri_id = "Valitse bakteeri";
+            }
+
+
+            
+
+            'valittu_bakteeri_id'=>$tulokset_bakteeri_id*/
+            $osanaytteitaKpl = '-';
+
+             return $this->renderAjax('tulokset',[
                 'model'=>$model,
                 'array'=>$array,
+                'modelsBakteeri'=>$modelsBakteeri,
+                'osanaytteitaKpl'=>$osanaytteitaKpl,
+                
+
+                
                 
                 ]);
+
 
 
               if (isset($_POST['btnHae'])) {$model->m_tulos1 = "12123213";}
@@ -353,20 +384,112 @@ class NosController extends Controller
 
     }
 
+
     public function actionKirjaus($id)
     {
+        $modelsBakteeri = [new Tulokset];
+        if (isset($_GET["Tulokset"]))
+        {
+            $tulokset = $_GET["Tulokset"];
+            $tulokset_bakteeri_id = $tulokset['bakteeri_id'];
+        }
         
+        //$bktr = unserialize($bktr);
+        $model = new Tulokset();
+        $array = [];
+
+        $naytteita = NosAnalysoitavat::find()->where( [ 'nos_id' => $id, 'bakteeri_id' => $tulokset_bakteeri_id ] )->all();
+
+        //$osanaytteet_n = $naytteita->osanaytteita_n;
+        //print_r($naytteita);
+
+        $osanaytteet_n = $naytteita[0]['osanaytteita_n'];
+        //print_r($osanaytteet_n);
+        //$naytteita->osanaytteita_n;
+
+
+       if ($model->load(Yii::$app->request->get()))
+       {
+             //Yii::$app->response->format = 'php';
+            '<script>alert("here it stops")</script>';
+
+            /* $items = [
+                'model'=>$model,
+                'array'=>$array,
+                'modelsBakteeri'=>$modelsBakteeri,
+                'valittu_bakteeri_id'=>$tulokset_bakteeri_id,
+                'bakteeri_id'=>$tulokset_bakteeri_id,
+                'osanaytteet_n'=>$osanaytteet_n
+                
+                ];
+                return \yii\helpers\Json::encode($items); */
+       }
+       else 
+       {
+            $model->nos_id = $id;
+            $model->bakteeri_id = $tulokset_bakteeri_id;
+
+             $count = NosAnalysoitavat::find()->where(['nos_id' => $id])->all();
+
+            
+
+            foreach ($count as $key => $value) {
+                $bakteerin_id = Bakteeri::findOne($value->bakteeri_id);
+
+                $array[$key] = ['id' =>$value->bakteeri_id, 'nimi'=>$bakteerin_id->nimi];
+                
+            }
+
+
+
+
+            echo 1;
+           return $this->renderAjax('tulokset',[
+                'model'=>$model,
+                'array'=>$array,
+                'modelsBakteeri'=>$modelsBakteeri,
+                'valittu_bakteeri_id'=>$tulokset_bakteeri_id,
+                'bakteeri_id'=>$tulokset_bakteeri_id,
+                'osanaytteet_n'=>$osanaytteet_n
+                
+                ]);
+
+       }
+
         //$model = new Tulokset();
         //$model->bakteeri_id = $id;
         //$model->nos_id = $id;
 
         //$lkm = NosAnalysoitavat::find()->where(['nos_id' => $id, 'bakteeri_id' => $bakteeri]);
 
-       echo "<?= $form->field($model, 'nos_id')->textInput(['readonly' => true]) ?>
+       /* "<?= $form->field($model, 'nos_id')->textInput(['readonly' => true]) ?>
      
         <?= $form->field($model, 'm_tulos1')->textInput() ?>
-        <?= $form->field($model, 'M_tulos2')->textInput() ?> ";
+        <?= $form->field($model, 'M_tulos2')->textInput() ?> "; */
 
+
+    }
+    public function actionTestaa($id, $id2) {
+
+        $bakteeri = Bakteeri::findOne($id);
+
+        $nayteTiedot = NosAnalysoitavat::find()->where( [ 'nos_id' => $id2, 'bakteeri_id' => $id ] )->all();
+        $osanayte = $nayteTiedot[0]['osanaytteita_n'];
+        $otetut_naytteet = $nayteTiedot[0]['otetut_naytteet_lkm'];
+        $bNimi = $bakteeri->nimi;
+        $bId = $bakteeri->id;
+
+        
+        $data = [ 
+        'nimi'=> $bNimi,
+        'id' => $bId,
+        'otetut_naytteet' => $otetut_naytteet,
+        'osanayte' => $osanayte,
+        ];
+
+        return Json::encode($data);
+        
+        
 
     }
  

@@ -20,6 +20,7 @@ class Tulokset extends \yii\db\ActiveRecord
 {
     public $lkm;
     
+    
     /**
      * @inheritdoc
      */
@@ -35,7 +36,7 @@ class Tulokset extends \yii\db\ActiveRecord
     {
         return [
             [['m_tulos1', 'M_tulos2', 'nos_id'], 'required'],
-            [['nos_id', 'bakteeri_id'], 'integer'],
+            [['id','nos_id', 'bakteeri_id'], 'integer'],
             [['m_tulos1', 'M_tulos2'], 'string', 'max' => 32],
             
         ];
@@ -47,11 +48,14 @@ class Tulokset extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'id',
             'm_tulos1' => 'Tulos m',
             'M_tulos2' => 'Tulos M',
             'nos_id' => 'Nos ID',
             'bakteeri_id' => 'Bakteeri ID',
             'array' => 'array',
+            'lkm' => 'Osanäytteiden määrä',
+
         ];
     }
 
@@ -60,7 +64,7 @@ class Tulokset extends \yii\db\ActiveRecord
      */
     public function getNos()
     {
-        return $this->hasOne(Send::className(), ['nos_id' => 'nos_id']);
+        return $this->hasOne(NosAnalysoitavat::className(), ['nos_id' => 'nos_id']);
     }
 
     /**
@@ -68,6 +72,6 @@ class Tulokset extends \yii\db\ActiveRecord
      */
     public function getBakteeri()
     {
-        return $this->hasOne(NosAnalysoitavat::className(), ['bakteeri_id' => 'bakteeri_id']);
+        return $this->hasOne(Nos::className(), ['bakteeri_id' => 'bakteeri_id']);
     }
 }
