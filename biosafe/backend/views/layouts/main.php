@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -28,20 +28,20 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Etusivu',
+        'brandLabel' => 'My Company',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Etusivu', 'url' => ['/site/index']],
+        ['label' => 'Home', 'url' => ['/site/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Kirjaudu sisään', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
-            'label' => 'Kirjaudu ulos (' . Yii::$app->user->identity->username . ')',
+            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
             'url' => ['/site/logout'],
             'linkOptions' => ['data-method' => 'post']
         ];
@@ -54,9 +54,9 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        <?=  Breadcrumbs::widget([ /*
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [], */
+        ])   ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>

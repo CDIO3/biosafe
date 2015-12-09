@@ -12,6 +12,7 @@ use backend\models\Nos_analysoitavat;
 
 
 
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Nos */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,7 +20,7 @@ use backend\models\Nos_analysoitavat;
 
 <div class="nos-form">
 
-    <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => $model->formName()]); ?>
      
       <?= $form->field($model, 'naytteenottopvm')->widget(DatePicker::className(),[
         'name' => 'deadline',
@@ -59,10 +60,10 @@ use backend\models\Nos_analysoitavat;
 
 
 
-    <div class="row" style="width:80% display:table" >
+    <div class="row">
 
      <div class="panel panel-default">
-        <div class="panel-heading" style="width:80%" ><h4><i class="glyphicon glyphicon-option-vertical"></i> Analysoitavat bakteerit</h4></div>
+        <div class="panel-heading" style="width:80%;" ><h4><i class="glyphicon glyphicon-option-vertical"></i> Analysoitavat bakteerit</h4></div>
         <div class="panel-body">
              <?php DynamicFormWidget::begin([
                 'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -137,23 +138,31 @@ use backend\models\Nos_analysoitavat;
     <?php ActiveForm::end(); ?>
 
 </div>
-
 <?php 
 $script = <<< JS
 
-$('form#dynamic-form').on('beforeSubmit', function(e)
+$('form#{$model->formName()}').on('beforeSubmit', function(e)
 {
     var \$form = $(this);
     $.post(
         \$form.attr("action"), 
         \$form.serialize()
         )
-       
-                $(\$form).trigger("reset");
+        .done(function(result) {
+            if(result.message == '1')
+            {
+                //$(\$form).trigger("reset");
                 //$(document).find('#secondmodal').modal('hide');
                 $.pjax.reload({container:'#nosGrid'});
-                alert("Suunnitelma luotu!");
-         
+            }
+            else {
+                
+                $("#message").html(result);
+            } 
+            }).fail(function()
+            {
+                console.log("server error");
+            });
     return false;
     
 });

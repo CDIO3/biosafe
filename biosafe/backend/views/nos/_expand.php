@@ -25,13 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
                   <?php 
                 $x = 5;
                
-                $paskaa = $x + 3;
+                
                 $i;
                 
-                for ($s = 0; $s < 4; $s++)
+                for ($s = 0; $s < 3; $s++)
                 {
                     echo " 
-                    <th colspan='3' class='text-center text-danger'>Bakteerin ".$s." nimi</th>
+                    <th colspan='3' class='text-center text-danger'>Bakteerin ".($s+1)." nimi</th>
                 
                 </tr>
                 <tr class='active'>
@@ -43,21 +43,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 for ($i = 0; $i < $x; $i++)
                 {
                      $luku1 = 12;
+                     
                     echo "
                     <tr>
-                        <td class='text-center'>".((float)$i + 4)."</td><td>".($luku1 + 4)."</td><td class='text-right'>".((int)$i + 12)."</td>
+                        <td class='text-center'>".((float)$i + 1)."</td><td>".((float)$luku1 * 1.8 +$s+$i)."</td><td class='text-right'>".((float)$luku1 * 2.12 +$s+$i)."</td>
                     </tr>
                     ";
                         
                 }
+            
             }
+               
+               
+               
+               echo " <tr class='warning'>
+                    <th></th><th></th><th class='text-right'>Tuloksia ".$s." kpl</th>
+                </tr> ";
+                
+                 ?>
 
-               
-                ?>
-               
-                <tr class="warning">
-                    <th></th><th>Footer</th><th class="text-right">Tähän jotain</th>
-                </tr>
             </tbody></table>
     
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -86,6 +90,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
         'columns' => [
                 ],
+
+               
+       
+       
+               
 
     ]); ?>
 
