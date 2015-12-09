@@ -6,7 +6,6 @@ use backend\models\NosAnalysoitavat;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
-
 ?>
 <div class="tulokset_kirjaus">
 
