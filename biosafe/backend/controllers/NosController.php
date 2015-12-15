@@ -20,6 +20,7 @@ use yii\web\Response;
 use yii\db\ActiveQuery;
 use app\components\PhpArrayFormatter;
 use yii\helpers\Json;
+use backend\models\Info;
 
 /**
  * NosController implements the CRUD actions for Nos model.
@@ -215,6 +216,27 @@ class NosController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('Sivua ei löytynyt');
+        }
+    }
+    
+    public function actionInfo($id)
+    {
+        $model = new Info();
+
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+           
+            return $this->redirect(['view', 'id' => $model->nos_id]);
+        }
+        else 
+        {  
+            $snimi =Yii::$app->user->identity->sukunimi;
+            $enimi = Yii::$app->user->identity->etunimi;
+            $model->nos_id = $id;   
+            $model->bakteeri_id;
+            return $this->render('info',['model'=>$model]);
+
+          
         }
     }
     public function actionSend($id)
