@@ -30,7 +30,7 @@ class NosAnalysoitavat extends \yii\db\ActiveRecord
     {
         return [
             [['osanaytteita_n', 'osanaytteita_c','m_arvo1','M_arvo2'], 'required'],
-            [['nos_id', 'bakteeri_id', 'osanaytteita_n', 'osanaytteita_c','m_arvo1','M_arvo2'], 'integer']
+            [['nos_id', 'bakteeri_id', 'osanaytteita_n', 'osanaytteita_c','m_arvo1','M_arvo2', 'otetut_naytteet_lkm'], 'integer']
         ];
     }
 
@@ -46,6 +46,7 @@ class NosAnalysoitavat extends \yii\db\ActiveRecord
             'osanaytteita_c' => 'Virhemarginaali',
             'm_arvo1' => 'm arvo',
             'M_arvo2' => 'M arvo',
+            'otetut_naytteet_lkm' => 'Otetut näytteet',
         ];
     }
 
